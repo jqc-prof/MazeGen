@@ -10,31 +10,48 @@ namespace JiaLab3
     public class CameraRotate : MonoBehaviour
     {
         [SerializeField] private Camera cam;
-        [SerializeField] private float speed;
         private InputAction rotater;
-        private Vector2 contextValue;
-        // Start is called before the first frame update
+
+        [SerializeField] private float rotationSpeed = 2f;
+
+        [SerializeField] private float maxVerticalAngle = 80f; // Maximum vertical angle in degrees
+        [SerializeField] private float minVerticalAngle = -80f; // Minimum vertical angle in degrees
+
+        private float currentXRotation = 0f;
+
         public void Initialize(InputAction action)
         {
-            this.rotater = action;
+            rotater = action;
             rotater.Enable();
-            rotater.performed += OnCameraRotate;
+            rotater.performed += OnRotate;
         }
 
-        void FixedUpdate()
+        private void OnRotate(InputAction.CallbackContext context)
         {
-                Quaternion deltaRotation = Quaternion.Euler(contextValue.y, contextValue.x, 0f);
-                Quaternion targetRotation = cam.transform.rotation * deltaRotation;
-                cam.transform.rotation = Quaternion.RotateTowards(cam.transform.rotation, targetRotation, speed * Time.deltaTime);
-                contextValue = Vector2.zero;
+            Vector2 rotation = context.ReadValue<Vector2>();
+            float mouseX = rotation.x;
+            float mouseY = rotation.y;
+
+            // Rotate horizontally based on mouse X movement
+            transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
+
+            // Calculate the new vertical rotation based on mouse Y movement
+            currentXRotation -= mouseY * rotationSpeed;
+            currentXRotation = Mathf.Clamp(currentXRotation, minVerticalAngle, maxVerticalAngle);
+
+            // Create the target rotation based on the new vertical rotation
+            Quaternion targetRotation = Quaternion.Euler(currentXRotation, 0f, 0f);
+
+            // Rotate the camera towards the target rotation using Quaternion.RotateTowards
+            cam.transform.localRotation = Quaternion.Euler(targetRotation.eulerAngles.x, cam.transform.localRotation.eulerAngles.y, cam.transform.localRotation.eulerAngles.z);
+
+            cam.transform.localRotation = Quaternion.RotateTowards(cam.transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        private void OnCameraRotate(InputAction.CallbackContext context)
+        public void Update()
         {
-            Vector2 input = context.ReadValue<Vector2>();
-            contextValue = input;
+            Vector3 newPosition = new Vector3(transform.position.x, 1f, transform.position.z);
+            transform.position = newPosition;
         }
-
-
     }
 }

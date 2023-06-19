@@ -118,7 +118,7 @@ namespace JiaLab3
                 {
                     ""name"": ""up"",
                     ""id"": ""9680e7f6-f30c-4186-a814-fd9c6b99da91"",
-                    ""path"": ""<Mouse>/delta/down"",
+                    ""path"": ""<Mouse>/delta/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -129,7 +129,7 @@ namespace JiaLab3
                 {
                     ""name"": ""down"",
                     ""id"": ""6c451d90-e981-4d80-b445-b494254f62db"",
-                    ""path"": ""<Mouse>/delta/up"",
+                    ""path"": ""<Mouse>/delta/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
