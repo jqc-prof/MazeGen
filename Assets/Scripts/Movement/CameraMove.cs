@@ -13,6 +13,13 @@ namespace JiaLab3
         [SerializeField] private float speed;
         private InputAction mover;
         private Vector2 contextValue;
+        private Rigidbody camRigidbody;
+
+        void Start()
+        {
+            camRigidbody = GetComponent<Rigidbody>();
+            camRigidbody.freezeRotation = true;
+        }
 
         // Start is called before the first frame update
         public void Initialize(InputAction action)
@@ -25,6 +32,8 @@ namespace JiaLab3
 
         void FixedUpdate()
         {
+            camRigidbody.velocity = Vector3.zero;
+            camRigidbody.angularVelocity = Vector3.zero;
             Vector3 localMovement = cam.transform.TransformDirection(new Vector3(contextValue.x, 0f, contextValue.y)) * speed * Time.deltaTime;
             Vector3 newPosition = cam.transform.position + localMovement;
             cam.transform.position = Vector3.MoveTowards(cam.transform.position, newPosition, speed * Time.deltaTime);
@@ -40,5 +49,6 @@ namespace JiaLab3
         {
             contextValue = Vector2.zero;
         }
+
     }
 }

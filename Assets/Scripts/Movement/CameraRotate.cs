@@ -12,7 +12,7 @@ namespace JiaLab3
         [SerializeField] private Camera cam;
         private InputAction rotater;
 
-        [SerializeField] private float rotationSpeed = 2f;
+        [SerializeField] private float rotationSpeed = 1.5f;
 
         [SerializeField] private float maxVerticalAngle = 80f; // Maximum vertical angle in degrees
         [SerializeField] private float minVerticalAngle = -80f; // Minimum vertical angle in degrees
@@ -50,7 +50,7 @@ namespace JiaLab3
 
         public void Update()
         {
-            Vector3 newPosition = new Vector3(transform.position.x, 1f, transform.position.z);
+            Vector3 newPosition = new Vector3(transform.position.x, 6f, transform.position.z);
             transform.position = newPosition;
         }
     }
