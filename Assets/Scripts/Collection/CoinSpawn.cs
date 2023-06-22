@@ -9,20 +9,22 @@ namespace JiaVincent.Lab3
     {
         [SerializeField] private GameObject coinToSpawn;
         private string partialName = "TrueCell";
+        private string partialName2 = "FalseCell";
 
         void Start()
         {
-            // Assuming your object has a collection of children named "children"
-            int childIndex = 0;
-            foreach (Transform child in transform)
-            {
-                Vector3 newPosition = child.position + new Vector3(0f, 5f, 0f);
-                if (child.name.Contains(partialName))
-                {
-                    GameObject.Instantiate<GameObject>(coinToSpawn, newPosition, Quaternion.identity);
-                }
 
-                childIndex++;
+            int childCount = transform.childCount;
+            for (int childIndex = 1; childIndex < childCount; childIndex += 2)
+            {
+                Transform currentChild = transform.GetChild(childIndex - 1);
+                Transform nextChild = transform.GetChild(childIndex);
+
+                // Check if current or next child's name contains the partial match
+                if (currentChild.name.Contains(partialName) && nextChild.name.Contains(partialName2))
+                {
+                    GameObject.Instantiate<GameObject>(coinToSpawn, currentChild.position + new Vector3(0f, 5f, 0f), Quaternion.identity);
+                }
             }
         }
     }
