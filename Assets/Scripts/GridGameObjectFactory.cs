@@ -7,6 +7,7 @@ namespace ShareefSoftware
         const string baseCellNameFormat = "{0}_{1}_{2}";
         const string trueCellName = "TrueCell";
         const string falseCellName = "FalseCell";
+        const string deadEndCellName = "DeadEndCell";
         private readonly float cellWidth;
         private readonly float cellHeight;
 
@@ -29,6 +30,7 @@ namespace ShareefSoftware
                     bool gridCell = grid.GetCellValue(row, column);
                     string cellName = gridCell ? trueCellName : falseCellName;
                     string name = string.Format(baseCellNameFormat, cellName, row, column);
+
                     if (grid.GetCellValue(row, column))
                     {
                         PrefabFactoryIfTrue.CreateAt(position, name);
@@ -36,6 +38,7 @@ namespace ShareefSoftware
                     else
                     {
                         PrefabFactoryIfFalse.CreateAt(position, name);
+
                     }
                 }
             }

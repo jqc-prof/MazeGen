@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace JiaLab3
+namespace JiaVincent.Lab3
 {
     public partial class @Movement: IInputActionCollection2, IDisposable
     {

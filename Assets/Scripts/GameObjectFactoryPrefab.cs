@@ -13,5 +13,11 @@ namespace ShareefSoftware
             prefab.name = name ?? Prefab.name;
             return prefab;
         }
+
+        public GameObject CreateCoin(Vector3 position)
+        {
+            var prefab = GameObject.Instantiate<GameObject>(Prefab, position, Quaternion.identity, Parent);
+            return prefab;
+        }
     }
 }

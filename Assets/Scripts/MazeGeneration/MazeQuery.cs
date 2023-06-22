@@ -5,6 +5,7 @@ namespace ShareefSoftware
 {
     public static class MazeQuery
     {
+
         public static IEnumerable<(int Row, int Column)> DeadEndsNoLinq(this Maze maze)
         {
             for (int row = 0; row < maze.NumberOfRows; row++)
@@ -62,5 +63,7 @@ namespace ShareefSoftware
                         select (cell.Row, cell.Column);
             return query;
         }
+
+        
     }
 }

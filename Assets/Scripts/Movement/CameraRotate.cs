@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using JiaLab3;
+using JiaVincent.Lab3;
 using UnityEngine.InputSystem;
 using System;
 
-namespace JiaLab3
+namespace JiaVincent.Lab3
 {
     public class CameraRotate : MonoBehaviour
     {

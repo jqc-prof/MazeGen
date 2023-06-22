@@ -1,7 +1,7 @@
-using JiaLab3;
+using JiaVincent.Lab3;
 using UnityEngine;
 
-namespace JiaLab3
+namespace JiaVincent.Lab3
 {
     public class InputManager : MonoBehaviour
     {

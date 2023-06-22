@@ -10,6 +10,7 @@ namespace ShareefSoftware
         [SerializeField] int numberOfColumns = 10;
         [SerializeField] List<GameObject> barrierPrefabs;
         [SerializeField] List<GameObject> pathPrefabs;
+        [SerializeField] List<GameObject> coinPrefabs;
         [SerializeField] private float cellWidth;
         [SerializeField] private float cellHeight;
         [SerializeField] private Transform parentForNewObjects;
@@ -27,10 +28,11 @@ namespace ShareefSoftware
         {
             var pathFactory = new GameObjectFactoryRandomFromList(pathPrefabs, random) { Parent = parentForNewObjects };
             var wallFactory = new GameObjectFactoryRandomFromList(barrierPrefabs, random) { Parent = parentForNewObjects };
+
             var gridFactory = new GridGameObjectFactory(cellWidth, cellHeight)
             {
                 PrefabFactoryIfTrue = pathFactory,
-                PrefabFactoryIfFalse = wallFactory
+                PrefabFactoryIfFalse = wallFactory,
             };
             gridFactory.CreatePrefabs(occupancyGrid);
         }
