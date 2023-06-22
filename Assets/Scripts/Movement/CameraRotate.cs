@@ -10,20 +10,28 @@ namespace JiaVincent.Lab3
     public class CameraRotate : MonoBehaviour
     {
         [SerializeField] private Camera cam;
-        private InputAction rotater;
-
-        [SerializeField] private float rotationSpeed = 1.5f;
-
+        [SerializeField] private float rotationSpeed = 20f;
+        [SerializeField] private float rotationSpeedY = 20f;
         [SerializeField] private float maxVerticalAngle = 80f; // Maximum vertical angle in degrees
         [SerializeField] private float minVerticalAngle = -80f; // Minimum vertical angle in degrees
 
+        private InputAction rotater;
         private float currentXRotation = 0f;
 
         public void Initialize(InputAction action)
         {
             rotater = action;
-            rotater.Enable();
             rotater.performed += OnRotate;
+        }
+
+        private void OnEnable()
+        {
+            rotater.Enable();
+        }
+
+        private void OnDisable()
+        {
+            rotater.Disable();
         }
 
         private void OnRotate(InputAction.CallbackContext context)
@@ -36,16 +44,16 @@ namespace JiaVincent.Lab3
             transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
 
             // Calculate the new vertical rotation based on mouse Y movement
-            currentXRotation -= mouseY * rotationSpeed;
+            currentXRotation -= mouseY * rotationSpeedY;
             currentXRotation = Mathf.Clamp(currentXRotation, minVerticalAngle, maxVerticalAngle);
 
             // Create the target rotation based on the new vertical rotation
-            Quaternion targetRotation = Quaternion.Euler(currentXRotation, 0f, 0f);
+            Quaternion targetRotation = Quaternion.Euler(currentXRotation, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
 
-            // Rotate the camera towards the target rotation using Quaternion.RotateTowards
-            cam.transform.localRotation = Quaternion.Euler(targetRotation.eulerAngles.x, cam.transform.localRotation.eulerAngles.y, cam.transform.localRotation.eulerAngles.z);
-
+            // Smoothly rotate the camera towards the target rotation
+            cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             cam.transform.localRotation = Quaternion.RotateTowards(cam.transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+
         }
 
         public void Update()
